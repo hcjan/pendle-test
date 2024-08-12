@@ -1,7 +1,12 @@
 import '@typechain/hardhat';
 import "hardhat-contract-sizer";
-import { HardhatUserConfig } from "hardhat/types";
+import "@nomicfoundation/hardhat-toolbox";
+import { HardhatUserConfig } from "hardhat/config";
+import * as dotenv from "dotenv";
 
+dotenv.config();
+
+const PRIVATE_KEY = process.env.PRIVATE_KEY || '';
 function viaIR(version: string, runs: number) {
     return {
         version,
@@ -17,6 +22,16 @@ function viaIR(version: string, runs: number) {
 }
 
 const config: HardhatUserConfig = {
+    networks: {
+        "canto": {
+          url: "https://canto-testnet.plexnode.wtf",
+          accounts: [PRIVATE_KEY]
+        },
+        "arbitrum": {
+          url: "https://arb-sepolia.g.alchemy.com/v2/I-ZVEdUQy4Mk3rwbsNAIp_MVql6coseO",
+          accounts: [PRIVATE_KEY]
+        }
+      },
     paths: {
         sources: './contracts',
         tests: './test',
